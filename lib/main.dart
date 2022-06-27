@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'dart:io';
 import 'package:flutter/material.dart';
-import './quiz.dart';
-import './result.dart';
+import 'package:flutter_quiz_app/quiz.dart';
+import 'package:flutter_quiz_app/result.dart';
 import 'package:bitsdojo_window/bitsdojo_window.dart';
 
 final _questions = List<Map>.empty(growable: true);
@@ -35,18 +37,21 @@ void main() {
       ]
     },
   ]);
+
   runApp(MyApp());
 
-  doWhenWindowReady(() {
-    final win = appWindow;
-    final initialSize = Size(400, 560);
-    win.minSize = initialSize;
-    win.size = initialSize;
-    win.maxSize = initialSize;
-    win.alignment = Alignment.center;
-    win.title = "My First App";
-    win.show();
-  });
+  if (!kIsWeb && Platform.isWindows) {
+    doWhenWindowReady(() {
+      final win = appWindow;
+      const initialSize = Size(400, 560);
+      win.minSize = initialSize;
+      win.size = initialSize;
+      win.maxSize = initialSize;
+      win.alignment = Alignment.center;
+      win.title = "My First App";
+      win.show();
+    });
+  }
 }
 
 class MyApp extends StatefulWidget {

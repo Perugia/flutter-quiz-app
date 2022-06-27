@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
-import './windowbuttons.dart';
-import './null.dart';
+import 'package:flutter/foundation.dart' show kIsWeb;
+import 'package:flutter_quiz_app/windowbuttons.dart';
 
 class Result extends StatelessWidget {
-  num TotalScore;
+  final num totalScore;
   final Function resetHandler;
 
-  Result(this.TotalScore, this.resetHandler);
+  const Result(this.totalScore, this.resetHandler, {Key? key})
+      : super(key: key);
 
   String get result {
-    String resultText = "Your Score: ${TotalScore.toString()}";
+    String resultText = "Your Score: ${totalScore.toString()}";
     return resultText;
   }
 
@@ -18,7 +19,11 @@ class Result extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Platform.isWindows ? WindowButtons() : nullWidget(),
+        (!kIsWeb && Platform.isWindows)
+            ? WindowButtons()
+            : const SizedBox(
+                height: 50,
+              ),
         Center(
             child: Container(
           padding: const EdgeInsets.all(24),
@@ -35,10 +40,10 @@ class Result extends StatelessWidget {
               ),
               TextButton(
                 onPressed: () => resetHandler(),
-                child: const Text("Try again"),
                 style: ElevatedButton.styleFrom(
                   textStyle: const TextStyle(fontSize: 18),
                 ),
+                child: const Text("Try again"),
               )
             ],
           ),

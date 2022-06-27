@@ -5,16 +5,21 @@ class WindowButtons extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return WindowTitleBarBox(
-      child: Row(
-        children: [
-          Expanded(child: MoveWindow()),
-          Row(
-            children: [
-              MinimizeWindowButton(),
-              CloseWindowButton(),
-            ],
-          ),
-        ],
+      child: Container(
+        color: Colors.deepOrange,
+        child: Row(
+          children: [
+            Expanded(child: Container(color: Colors.deepOrange, child: MoveWindow())),
+            Row(
+              children: [
+                MinimizeWindowButton(
+                    colors: WindowButtonColors(normal: Colors.deepOrange)),
+                CloseWindowButton(
+                    colors: WindowButtonColors(normal: Colors.deepOrange)),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }
